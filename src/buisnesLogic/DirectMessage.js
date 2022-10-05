@@ -9,8 +9,7 @@ function directMessage(){
       // TODO новый юзер
     }
     
-    textToSend = tTexts.getRange('B1').getValue();
-    TelegramAPI.sendText(token, chat_id, textToSend);
+    botSendText(token, chat_id, text);
   }
   else if (text.startsWith("/start ")) { // start deep link
     if(userRegister(user_id)){ // проверка и регистрация если это новый юзер в боте
@@ -18,6 +17,9 @@ function directMessage(){
     }
     let payload = text.split(" ")[1];
 
+  }
+  else {
+    botSendText(token, chat_id, text);
   }
 
   // else if (text == "/help" || text == "/help@terraforming_mars_bot") {

@@ -7,15 +7,15 @@ function doPost(e) {
   
   let contents = JSON.parse(e.postData.contents);
 
-  if (contents.message !== null) {
-    messageUpdateReceived(contents.message);
+  if (contents.message != null) {
+    messageReceived(contents.message);
   }
 
-  else if (contents.callback_query !== null) {
+  else if (contents.callback_query != null) {
     CallbackQueryReceived(contents.callback_query);
   }
 
-  else if (contents.edited_message !== null) {
+  else if (contents.edited_message != null) {
     editMessageReceived(contents.edited_message);
   }
 

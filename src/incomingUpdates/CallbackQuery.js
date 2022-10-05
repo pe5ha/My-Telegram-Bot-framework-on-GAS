@@ -8,7 +8,7 @@ function callbackQueryReceived(callback_query) {
   message_id = callback_query.message.message_id;
   data = callback_query.data;
 
-  logUpdate("Кнопка: "+data);
+  logUpdate("Кнопка: ", data);
 
   switch (data) {
     case "start ok":

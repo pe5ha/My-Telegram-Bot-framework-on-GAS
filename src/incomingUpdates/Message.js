@@ -9,7 +9,7 @@ function messageReceived(message) {
   text = message.text;
   message_id = message.message_id;
 
-  logUpdate(text);
+  logUpdate("Сообщение: ",text);
 
 
   if (chat_id == user_id) { // сообщения в лс

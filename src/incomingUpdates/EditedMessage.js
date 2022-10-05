@@ -10,7 +10,7 @@ function editMessageReceived(edited_message){
   text = edited_message.text;
   message_id = edited_message.message_id;
 
-  logUpdate("Сообщение от "+Utilities.formatDate(new Date(date * 1000), "GMT+3", "dd.MM.yyyy HH:mm:ss")+" изменено на: "+text);
+  logUpdate("Сообщение изменено: ", text);
 
 
   // if (chat_id == user_id) { // сообщения в лс

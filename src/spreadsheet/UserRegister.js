@@ -8,6 +8,13 @@
 function userRegister(id) {
   // поиск юзера в списке уже существующих
   tUsers = table.getSheetByName(UsersSheet);
+  if(tUsers == null) { // если такого листа нет
+    table.insertSheet(UsersSheet); // то такой лист создаётся
+    tUsers = table.getSheetByName(UsersSheet);
+    let titles = [["время",	"id",	"ник",	"имя",	"current action"]];
+    let style = SpreadsheetApp.newTextStyle().setBold(true).setItalic(true).build();
+    tUsers.getRange(1,1,1,titles[0].length).setValues(titles).setTextStyle(style).setHorizontalAlignment("center");
+  }
   let usersData = tUsers.getRange('A:D').getValues(); // массив всех значений id
   let row = -1;
   let i;
@@ -20,15 +27,11 @@ function userRegister(id) {
 
   // добавление юзера
   if (row === -1) { // если юзер с таким id не записан, то регистрируем его
-    let userData = []; // массив данных пользователя
-    userData.push(Utilities.formatDate(new Date(), "GMT+3", "dd.MM.yyyy HH:mm:ss")); // когда добавился
-    userData.push(user_id); // id
-    userData.push(nick); // ник
-    userData.push(name); // имя
-    // userData.push(surname); // фамилия
+    let userData = [[Utilities.formatDate(new Date(), "GMT+3", "dd.MM.yyyy HH:mm:ss"),user_id,nick,name]]; // массив данных пользователя
+    // userData[0].push(surname); // фамилия
 
     tUsers.insertRowBefore(2); // в лист юзеров вставляется новая строка сверху (после заголовков)
-    tUsers.getRange(2, 1, 1, userData.length).setValues([userData]); // вставка инфы юзера
+    tUsers.getRange(2, 1, 1, userData[0].length).setValues(userData); // вставка инфы юзера
 
     // создание индивидуального листа, привязанного к id юзера
     //   let tPersonSheet = table.getSheetByName(""+id); // открытие листа, если он уже есть

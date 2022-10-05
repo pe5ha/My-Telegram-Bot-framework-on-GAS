@@ -3,20 +3,18 @@
  * Логирование всех сообщений, нажатий кнопок и всего прочего приходящего в бота в таблицу
  * @param {String} text - Текст обновления в нужном для таблице виде
  */
-function logUpdate(text) {
+function logUpdate(action, text) {
   let tLog = table.getSheetByName(LogSheet);
   if(tLog == null) { // если такого листа нет
     table.insertSheet(LogSheet); // то такой лист создаётся
     tLog = table.getSheetByName(LogSheet);
+    let titles = [["время",	"id",	"ник",	"имя",	"message_id", "action","что прислал",	"ответ бота"]];
+    let style = SpreadsheetApp.newTextStyle().setBold(true).setItalic(true).build();
+    tLog.getRange(1,1,1,titles[0].length).setValues(titles).setTextStyle(style).setHorizontalAlignment("center");
   }
-  let saveData = [];
-  saveData.push(Utilities.formatDate(new Date(date * 1000), "GMT+3", "dd.MM.yyyy HH:mm:ss"));
-  saveData.push(user_id);
-  saveData.push(nick);
-  saveData.push(name);
-  saveData.push(text);
   tLog.insertRowBefore(2);
-  tLog.getRange(2, 1, 1, saveData.length).setValues([saveData]);
+  let logData = [Utilities.formatDate(new Date(date*1000),"GMT+3","dd.MM.yyyy HH:mm:ss"),user_id,nick,name,message_id,action, text];
+  tLog.getRange(2,1,1,logData.length).setValues([logData]);
 }
 
 /**
@@ -25,15 +23,12 @@ function logUpdate(text) {
  */
 function logBotSending(text) {
   let tLog = table.getSheetByName(LogSheet);
-  let saveData = [];
-  saveData.push(Utilities.formatDate(new Date(date * 1000), "GMT+3", "dd.MM.yyyy HH:mm:ss"));
-  saveData.push(chat_id);
-  saveData.push(nick);
-  saveData.push(name);
-  saveData.push("");
-  saveData.push(text);
+  if(!tLog) return;
+
   tLog.insertRowBefore(2);
-  tLog.getRange(2, 1, 1, saveData.length).setValues([saveData]);
+  let logData = [[Utilities.formatDate(new Date(date*1000),"GMT+3","dd.MM.yyyy HH:mm:ss"),chat_id,nick,name,"","","",text]];
+  // TODO chat_id заменить на имя ЧАТА (групповой чат или диалог)
+  tLog.getRange(2,1,1,logData[0].length).setValues(logData);
 }
 
 function logDebug(e){
@@ -46,6 +41,11 @@ function logDebug(e){
   let contents = JSON.parse(e.postData.contents);
   tDebug.getRange(1, 1).setValue(JSON.stringify(contents, null, 5));
 }
+
+
+
+
+
 
 /**
  * @deprecated use logUpdate with text parameter instead 
