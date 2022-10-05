@@ -2,10 +2,10 @@
 function doPost(e) {
 
   if (debugEnable) {
-    table.getSheetByName(DebugSheet).getRange(1, 3).setValue(JSON.stringify(e, null, 5));
-    let contents = JSON.parse(e.postData.contents);
-    table.getSheetByName(DebugSheet).getRange(1, 1).setValue(JSON.stringify(contents, null, 5));
+    logDebug(e);
   }
+  
+  let contents = JSON.parse(e.postData.contents);
 
   if (contents.message !== null) {
     messageUpdateReceived(contents.message);
