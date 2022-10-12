@@ -1,5 +1,26 @@
+/**
+ * Версия 1
+ * Можно легко отключать от контейнера и передеплоить как web app, а можно ли и то и то??
+ */
+
+
+function debugDoPost(){
+  let tDebug = table.getSheetByName("Debug");
+  let e = tDebug.getRange('C1').getValue();
+  doPost(JSON.parse(e));
+  // d
+}
 
 function doPost(e) {
+  try{
+    entryPoint(e);
+  }
+  catch (err) {
+    botSendText(235733832,err.stack);
+  }
+}
+
+function entryPoint(e){
 
   if (debugEnable) {
     logDebug(e);

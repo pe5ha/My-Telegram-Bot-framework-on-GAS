@@ -4,7 +4,7 @@
  */
 
 
-function sendMediaGroup(token, chat_id, media) {
+ function sendMediaGroup(token, chat_id, media) {
   let data = {
     method: "post",
     payload: {
