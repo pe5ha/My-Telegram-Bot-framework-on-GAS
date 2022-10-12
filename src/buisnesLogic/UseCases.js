@@ -3,6 +3,7 @@
  *   Bot use cases detecting (User Roles and Current actions)
  */
 function useCases(){
+  
   // user current actions 1
   if(user.currentAction==UserCurrentActions.input_OGS_id||user.role==UserRoles.without_role){ 
     
